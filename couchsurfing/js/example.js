@@ -8,10 +8,8 @@ function init() {
     var models = sp.require('sp://import/scripts/api/models');
 
     var toplist = new models.Toplist();
-//    toplist.toplistType = models.TOPLISTTYPE.REGION;
-//    toplist.matchType = models.TOPLISTMATCHES.ARTISTS;
-//    toplist.region = 'SE';
-    toplist.userName = models.TOPLISTUSER_CURRENT;
+    toplist.toplistType = models.TOPLISTTYPE.USER;
+    toplist.matchType = models.TOPLISTMATCHES.ARTISTS;
 
     toplist.observe(models.EVENT.CHANGE, function() {
         toplist.results.forEach(function(artist) {
@@ -21,3 +19,4 @@ function init() {
 
     toplist.run();
 }
+init();
