@@ -1,5 +1,12 @@
+body {
+	background-color: #373737;
+	color: #999;
+}
 p {
 	text-align: left;
+}
+h1, h2, h3, h4, h5, h6 {
+	color: white;
 }
 h1 {
 	text-align: center;
@@ -24,9 +31,13 @@ h1 {
 }
 .concert h3 {
 	float: left;
+	margin: 0;
+	font-size: medium;
+	line-height: 1.125em;
 }
 .concert p {
 	clear: left;
+	margin: 0;
 }
 .concert .people-joining img {
 	width: 20px;
@@ -35,4 +46,7 @@ h1 {
 
 #search {
 	margin: 1em;
+}
+#search input {
+	margin: 0.25em 0;
 }
