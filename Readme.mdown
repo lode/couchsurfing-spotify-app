@@ -1,0 +1,9 @@
+```
+mkdir ~/Spotify
+cd ~/Spotify
+git clone git@github.com:NV/couchsurfing-spotify-app.git couchserfing
+```
+
+In Spotify app:
+
+Develop -> Show Bundle manager -> CouchSurfing
