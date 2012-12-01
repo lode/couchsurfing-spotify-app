@@ -26,6 +26,16 @@
 		cat.set('kind', 'cat');
 		cat.save();
 		
+		var cat = new Usergrid.Entity('animals');
+		cat.set('name', 'pi');
+		cat.set('kind', 'cat');
+		cat.save();
+		
+		var cat = new Usergrid.Entity('animals');
+		cat.set('name', 'yang-yin');
+		cat.set('kind', 'cat');
+		cat.save();
+		
 		// don't know why this is really needed, but without, you won't get them back
 		// they are stored in the database however
 		animals.addEntity(dog);
@@ -35,10 +45,13 @@
 		// there are advanced ways to paginate and search
 		// see https://github.com/apigee/usergrid-javascript-sdk#collection-paging
 		// and https://github.com/apigee/usergrid-javascript-sdk#custom-queries
-		while(animals.hasNextEntity()) {
-			var animal = animals.getNextEntity();
-			$('#animalList').append('<li>we have a ' + animal.get('kind') + ' called ' + animal.get('name') + '</li>');
-		}
+		animals.setQueryParams({"filter":"kind='cat'"});
+		animals.get(function(){
+			while(animals.hasNextEntity()) {
+				var animal = animals.getNextEntity();
+				$('#animalList').append('<li>we have a ' + animal.get('kind') + ' called ' + animal.get('name') + '</li>');
+			}
+		});
 	});
 	</script>
 </head>
