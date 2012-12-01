@@ -9,7 +9,7 @@ curl_post('https://api.usergrid.com/lode/sandbox/animals', $data);
 
 $animals = curl_get('https://api.usergrid.com/lode/sandbox/animals');
 $animal = curl_get('https://api.usergrid.com/lode/sandbox/animals/pi');
-$filter = http_build_query(array('kind' => "'cat'"));
+$filter = http_build_query(array('kind' => "'cat'")); // note the double quotes! (and note they are *not* used in the post)
 $cats = curl_get('https://api.usergrid.com/lode/sandbox/animals?filter='.urlencode($filter));
 
 print_r($animals['entities']);
