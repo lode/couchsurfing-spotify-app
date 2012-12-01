@@ -5,8 +5,22 @@
 	<title>My First App</title>
 	<link rel="stylesheet" href="sp://import/css/adam.css">
 	<link rel="stylesheet" href="tutorial.css">
+	<script src="jquery-1.8.3.js"></script>
 </head>
 <body>
-<h1 id="header">Hello, world!</h1>
+<h1 id="header">Concert Sleep-Over</h1>
+<form id="search" action="">
+    <div class="row"><input name="city"></div>
+    <div class="row"><input name="concert"></div>
+    <div class="row">
+        <select name="distance">
+            <option value="50">50km from my location</option>
+        </select>
+    </div>
+    <div>
+        <input type="submit">
+    </div>
+</form>
+<script src="search.js"></script>
 </body>
 </html>

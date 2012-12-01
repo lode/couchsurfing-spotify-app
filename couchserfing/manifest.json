@@ -1,11 +1,11 @@
 {
 	"BundleType": "Application",
-	"BundleIdentifier": "couchserfing",
+	"BundleIdentifier": "couchsurfing",
 	"AppIcon": {
 		"36x18": "tutorial.png"
 	},
 	"AppName": {
-		"en": "Tutorial"
+		"en": "CouchSurfing"
 	},
 	"SupportedLanguages": [
 		"en"
