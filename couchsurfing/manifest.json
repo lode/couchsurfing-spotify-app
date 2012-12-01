@@ -13,6 +13,8 @@
 	"RequiredPermissions": [
 		"http://ws.audioscrobbler.com",
 		"http://www.gravatar.com",
-		"http://cltampa.com"
+		"http://cltampa.com",
+		"http://s3.amazonaws.com",
+		"https://api.usergrid.com"
 	]
 }
