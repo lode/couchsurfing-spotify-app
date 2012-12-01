@@ -15,6 +15,7 @@
 		"http://www.gravatar.com",
 		"http://cltampa.com",
 		"http://s3.amazonaws.com",
-		"https://api.usergrid.com"
+		"https://api.usergrid.com",
+		"ajax.googleapis.com"
 	]
 }
