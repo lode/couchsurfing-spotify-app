@@ -51,7 +51,7 @@
 
 <div class="row">
     <div class="span8">
-        <h3>Didn't find the concert you're looking for?</h3>
+        <h2>Didn't find the concert you're looking for?</h2>
         <form id="search" action="#search-concert" class="form-horizontal">
             <input type="text" class="span4" name="band" placeholder="Which band are you looking for?">
             <input type="text" class="span4" name="location" placeholder="Where is the band playing?">
@@ -67,5 +67,12 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/search.js"></script>
 <script src="js/example.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.concert').on('click', function(){
+        window.location.href = 'concert.html';
+    });
+});
+</script>
 </body>
 </html>

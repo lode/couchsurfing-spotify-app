@@ -14,11 +14,16 @@ h1 {
 	padding: 20px;
 }
 
+.nav i {
+	padding-left: 5px;
+}
+
 .concert {
 	clear: both;
 	margin: 1em;
 	height: 100%;
 	overflow: hidden;
+	cursor: pointer;
 }
 .concert > img {
 	float: left;
