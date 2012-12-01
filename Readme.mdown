@@ -1,9 +1,7 @@
 ```
-mkdir ~/Spotify
-cd ~/Spotify
-git clone git@github.com:NV/couchsurfing-spotify-app.git couchserfing
+git clone git@github.com:NV/couchsurfing-spotify-app.git ~/Spotify
 ```
 
-In Spotify app:
+Enable [Spotify Apps development](https://developer.spotify.com/technologies/apps/#developer-account)
 
-Develop -> Show Bundle manager -> CouchSurfing
+In Spotify app menu: Develop -> Show Bundle manager -> Apps tab -> CouchSurfing
