@@ -1,0 +1,38 @@
+p {
+	text-align: left;
+}
+h1 {
+	text-align: center;
+	font-size: 24px;
+	padding: 20px;
+}
+
+.concert {
+	clear: both;
+	margin: 1em;
+	height: 100%;
+	overflow: hidden;
+}
+.concert > img {
+	float: left;
+	margin-right: 0.5em;
+	width: 60px;
+	height: 60px;
+}
+.concert .meta {
+	float: left;
+}
+.concert h3 {
+	float: left;
+}
+.concert p {
+	clear: left;
+}
+.concert .people-joining img {
+	width: 20px;
+	height: 20px;
+}
+
+#search {
+	margin: 1em;
+}

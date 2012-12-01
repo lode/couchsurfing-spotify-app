@@ -11,6 +11,8 @@
 		"en"
 	],
 	"RequiredPermissions": [
-		"http://ws.audioscrobbler.com"
+		"http://ws.audioscrobbler.com",
+		"http://www.gravatar.com",
+		"http://cltampa.com"
 	]
 }
