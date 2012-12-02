@@ -83,7 +83,6 @@ function rePopulateHostList(userArray){
 	hosts.get(function(){
 		while (hosts.hasNextEntity()) {
 			var host = hosts.getNextEntity();
-			console.log(host.get('member_name'));
 			var random = Math.floor(Math.random() * 4)+0;
 			if (random < 1) {
 				var $couchTpl = $('#tpl-host').html();
