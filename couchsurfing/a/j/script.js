@@ -650,8 +650,3 @@ LastFMParser.parseArtistEvents = function(_jsonString) {
 	}
 	return concerts;
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/master
