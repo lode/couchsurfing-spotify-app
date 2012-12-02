@@ -1,25 +1,51 @@
+var sp = getSpotifyApi(1);
+var models = sp.require('sp://import/scripts/api/models');
+var player = models.player;
+var spotifyuser = {};
+spotifyuser.spotifyprofileid = null;
+spotifyuser.toplist = null;
 var artists,
 	similar,
 	events,
-	lastFMLoader = new LastFMLoader();
-
+	lastFMLoader = new LastFMLoader()
 lastFMLoader.getUserTopArtists("RobinNieuwboer", returnedTopArtists, 200)
 
-//CouchSurfingLoader = new CouchSurfingLoader();
-//CouchSurfingLoader.getHostProfiles("Amsterdam", rePopulateHostList, 200);
+function init() {
+
+    var sp = getSpotifyApi();
+    var models = sp.require('sp://import/scripts/api/models');
+    
+    var toplist = new models.Toplist();
+    spotifyuser.toplist = toplist;
+    
+    toplist.toplistType = models.TOPLISTTYPE.USER;
+    toplist.matchType = models.TOPLISTMATCHES.ARTISTS;
+    var user = models.USER;
+    
+    spotifyuser.spotifyprofileid = models.session.anonymousUserID;
+    
+    toplist.observe(models.EVENT.CHANGE, function() {
+        toplist.results.forEach(function(artist) {
+        	lastFMLoader.getArtistEvents(artist.name, returnedArtistEvents, 99);
+        });
+    });
+
+    toplist.run();
+}
+init();
 
 function returnedTopArtists(data){
-	artists = LastFMParser.parseTopArtists(data);
+	//artists = LastFMParser.parseTopArtists(data);
 
-	lastFMLoader.getArtistsSimilar(artists[0]["name"], returnedSimilarArtists, 10);
+	//lastFMLoader.getArtistsSimilar(artists[0]["name"], returnedSimilarArtists, 10);
 }
 function returnedSimilarArtists(data){
-	similar = LastFMParser.parseSimilarArtists(data);
+	//similar = LastFMParser.parseSimilarArtists(data);
 
-	lastFMLoader.getArtistEvents(artists[4]["name"], returnedArtistEvents, 10);
+	//lastFMLoader.getArtistEvents(artists[4]["name"], returnedArtistEvents, 10);
 }
 function returnedArtistEvents(data){
-	events = LastFMParser.parseArtistEvents(data);
+	events.push(LastFMParser.parseArtistEvents(data));
 }
 
 function rePopulateHostList(userArray){
@@ -115,9 +141,9 @@ function Concert() {
 	
 	this.getGenres = function(){
 		artists = self.artists;
-		var genres = [];
+		genres = [];
 		for(var i =0, l = artists.length; i<l; i++){
-			var artistGenres = artist[i]["genres"];
+			artistGenres = artist[i]["genres"];
 			for(var i=0, l = artisGenres.length; i<l; i++){
 				if(genres.indexOf(artistGenres[i]) > -1){
 					genres.push(artistGenres[i]);
@@ -343,7 +369,7 @@ function User() {
 		var artists = self.artists,
 			genres = [];
 		for(var i =0, l = artists.length; i<l; i++){
-			var artistGenres = artist[i]["genres"];
+			artistGenres = artist[i]["genres"];
 			for(var i=0, l = artisGenres.length; i<l; i++){
 				if(genres.indexOf(artistGenres[i]) > -1){
 					genres.push(artistGenres[i]);
@@ -587,7 +613,6 @@ LastFMParser.parseArtistEvents = function(_jsonString) {
 	var concerts = [];
 	var concertsJson = _jsonString["events"]["event"];
 	if(concertsJson.length > 0){
-		console.log(concertsJson.length);
 		for(var i = 0, l = concertsJson.length; i<l; i++){
 			var newConcert = new Concert()
 			newConcert.name = concertsJson[i]["title"];
@@ -605,85 +630,5 @@ LastFMParser.parseArtistEvents = function(_jsonString) {
 	}
 	return concerts;
 }
-
-
-
-/**
- * <b>CouchSurfingLoadeer</b>
- * Dec 1, 2012 Lode
- * 
- * handles hosts from couchsurfing and adds them to concerts
- * @author Lode
- * 
- * @returns
- */
-
-function CouchSurfingLoader() {
-
-	// *********************************************************************** 
-	// CONSTRUCTOR METHOD WHICH EXECUTTES ITSELF ON CREATION OF THE CLASS
-	// *********************************************************************** 
-	(function() {
-
-	})();
-
-	// ***********************************************************************
-	// PRIVATE VARIABLES  
-	// ONLY PRIVELEGED METHODS MAY VIEW/EDIT/INVOKE 
-	// *********************************************************************** 
-
-	
-	// *********************************************************************** 
-	// PRIVATE METHODS 
-	// ONLY PRIVELEGED METHODS MAY VIEW/EDIT/INVOKE 
-	// *********************************************************************** 
-	
-
-	// *********************************************************************** 
-	// PRIVILEGED METHODS 
-	// MAY BE INVOKED PUBLICLY AND MAY ACCESS PRIVATE ITEMS 
-	// MAY NOT BE CHANGED; MAY BE REPLACED WITH PUBLIC FLAVORS 
-	// ************************************************************************ 
-	this.getBaseClass = function() {
-		return className;
-	};
-	
-	this.getHostProfiles = function(_location, handler, _length){
-		if (_location == undefined) {
-			_location = 'Amsterdam';
-		}
-		
-		Usergrid.ApiClient.init('lode', 'sandbox');
-		var hosts = new Usergrid.Collection('csmembers');
-		
-		hosts.setQueryParams({"filter":"location='" + _location + "'"});
-		hosts.get(function(){
-			while(hosts.hasNextEntity()) {
-				var host = hosts.getNextEntity();
-			}
-		});
-		
-		//console.log(hosts);
-	};
-
-	// ************************************************************************ 
-	// PUBLIC PROPERTIES -- ANYONE MAY READ/WRITE 
-	// ************************************************************************ 
-	
-};
-
-// ************************************************************************ 
-// PUBLIC METHODS -- ANYONE MAY READ/WRITE Classname.prototype.method
-// ************************************************************************ 
-
-
-// ************************************************************************ 
-// PROTOTYOPE PROERTIES -- ANYONE MAY READ/WRITE (but may be overridden) 
-// ************************************************************************ 
-
-
-// ************************************************************************ 
-// STATIC PROPERTIES -- ANYONE MAY READ/WRITE 
-// ************************************************************************ 
 
 
