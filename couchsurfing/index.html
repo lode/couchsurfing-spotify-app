@@ -53,41 +53,41 @@ $('#cs-authentication').submit(function(e) {
 
         csmembers.setQueryParams({"filter":"member_name='"+member_name+"'"});
         csmembers.get(function(){
-
-            var entity = csmembers.getNextEntity();
             
-            if(entity){
+            var csmemberentity = csmembers.getNextEntity();
+            
+            if(csmemberentity){
                 
-                var csprofileid = entity._data.id;
+                // get cs profile id
+                var csprofileid = csmemberentity._data.id;
                 $('.auth-error').html('');
                 
+                // get spotify profile id
                 var spotifyprofileid = spotifyuser.spotifyprofileid;
                 
-                var users = new Usergrid.Collection('appusers');
+                // update csmember entity
+                csmemberentity.set('spotifyprofileid',spotifyprofileid);
+                csmemberentity.save();
                 
+                var users = new Usergrid.Collection('appusers');
+                      
                 var user = new Usergrid.Entity("appusers");
                 user.set("csid",csprofileid);
                 user.set("name",csprofileid);
                 user.set("spotifyid",spotifyprofileid);
                 user.save();
-
-                console.log(user);
-
-                users.addNewEntity(user);
-               
-                //var appuserid = user._uuid;
-               
-                
                 
                 var topartists = new Usergrid.Collection('topartists');
                 
                 for (var i = 0; i < spotifyuser.topartists.length; i++) {
                     
                     var topartist = new Usergrid.Entity("topartists");
-                    topartist.set("appuserid",appuserid);
-                    topartist.set("artist",topartists[i]);
+                    topartist.set("spotifyprofileid",spotifyprofileid);
+                    topartist.set("csprofileid",csprofileid);
+                    topartist.set("artist",spotifyuser.topartists[i]);
+                    topartist.save();
                     
-                    //console.log(spotifyuser.topartists[i]);
+                    console.log(spotifyuser.topartists[i]);
                     //Do something
                 
                 }

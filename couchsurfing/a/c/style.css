@@ -36,10 +36,6 @@ html, body{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2b2b2', endColorstr='#313131',GradientType=0 );
 	padding:.2em;
 }
-.col-header.right{
-	text-align:right;
-	color:red;
-}
 h2{
 	font-size:1.6em;
 	text-shadow:0 1px 0 #FFF, 0 -1px 0 #666;
@@ -103,7 +99,6 @@ h2{
 	text-shadow:0 1px 0 #000;
 	margin:0 0 .2em;
 	padding:0;
-	color:#F00;
 }
 #sugested > ul > li a{
 	font-size:1em;
@@ -132,6 +127,7 @@ h2{
 	-webkit-transition: all .2s ease-in-out;
 	-o-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;
+	min-height:8em;
 }
 #available-couches .available-couch{
 	padding:.5em;
