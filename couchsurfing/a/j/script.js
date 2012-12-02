@@ -35,18 +35,17 @@ function rePopulateHostList(userArray){
 			var $preFold = $(divString).addClass("pre-fold").append($("<h3></h3>").text(userArray[i].name+"("+userArray[i].city+")"))
 			var $postFold = $(divString).addClass("post-fold").append($("<p></p>").html(userArray[i].description));
 			$couchContainer.append(preFold).append(postFold)
-			
 		}
 	}
 }
 
 function rePopulateConcertList(concertArray){
-	for(var i = 0, l = userArray.length; i<l; i++){
-		if(userArray[i].getBaseClass() == User){
-			var divString = "<div></div>";
-			var couchContainer = $(divString).addClass("available-couch")
-			var preFold = $(divString).addClass("pre-fold").append($("<h3></h3>").text(userArray[i].name+"("+userArray[i].city+")"))
-			var postFold = $(divString).addClass("post-fold").append($("<p></p>").html(userArray[i].description))
+	for(var i = 0, l = concertArray.length; i<l; i++){
+		if(concertArray[i].getBaseClass() == Concert){
+			var liString = "<li></li>";
+			var ContertListContainer = $(liString)
+			var title = $("<h3></h3>").text(concertArray[i].name)
+			var info = $("<ul></ul>").append($("<li></li>").text(concertArray[i].venue)).append($("<li></li>").text(concertArray[i].city))
 			
 		}
 	}
