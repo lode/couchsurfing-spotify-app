@@ -60,3 +60,15 @@ h1 {
 	width: 60px;
 	height: 60px;
 }
+
+.home_button{
+    padding:5px;
+    background:#08C;
+}
+
+#cs-auth-container{
+    text-align: center;
+    width:500px;
+    margin-left:auto;
+    margin-right:auto;
+}
