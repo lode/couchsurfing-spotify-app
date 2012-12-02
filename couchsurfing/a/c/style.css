@@ -140,12 +140,10 @@ h2{
 #available-couches .available-couch h3{
 	margin: 0;
 	padding: 0;
-	text-shadow:0 1px 0 #000;
-	color:#7CB5EE;
+	text-shadow: 0 1px 0 #000;
+  font-size: 16px;
 }
 #available-couches .available-couch .post-fold{
-	padding:.5em;
-	border-width:0 1px 1px 1px;
   overflow: hidden;
 }
 #available-couches .arrow{
@@ -159,4 +157,11 @@ h2{
 	-webkit-transition: all .2s ease-in-out;
 	-o-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;
+}
+.couchserfing-user-image {
+  float: left;
+  margin-right: 1em;
+  margin-bottom: .5em;
+  width: 60px;
+  height: 60px;
 }
