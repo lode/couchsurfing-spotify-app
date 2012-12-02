@@ -62,12 +62,9 @@ function returnedArtistEvents(data){
 }
 $("#sugested > ul > li").live('hover', function(){
 	_top = 10+ $(this).offset().top - $("#sugested").offset().top
-	$("#available-couches .arrow").css("margin-top" , _top);
+	$("#available-couches .arrow").css("top" , _top);
 	$("#available-couches").css("min-height" , _top+120);
 	rePopulateHostList();
-})
-$(".available-couch").live('click', function(){
-	$(this).find(".post-fold").toggle("fast");
 })
 
 
@@ -113,10 +110,6 @@ $(document).ready(function(){
 		_top = 10+ $(this).offset().top - $("#sugested").offset().top
 		$("#available-couches").css("margin-top" , _top);
 	})
-	$(".available-couch").live("click",function(){
-		$(this).find(".post-fold").toggle("fast");
-	})
-	
 });
 /**
  * <b>Concert</b>
