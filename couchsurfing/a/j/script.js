@@ -21,39 +21,56 @@ function returnedSimilarArtists(data){
 function returnedArtistEvents(data){
 	events = LastFMParser.parseArtistEvents(data);
 }
-$("#sugested > ul > li").hover(function(){
-	_top = 10+ $(this).offset().top - $("#sugested").offset().top
-	console.log(_top);
-	$("#available-couches .arrow").css("margin-top" , _top);
-	$("#available-couches").css("min-height" , _top+120);
-})
-$(".available-couch").click(function(){
-	$(this).find(".post-fold").toggle("fast");
-})
 
 function rePopulateHostList(userArray){
+	$("#available-couches .available-couch").remove();
 	for(var i = 0, l = userArray.length; i<l; i++){
 		if(userArray[i].getBaseClass() == User){
 			var divString = "<div></div>";
 			var $couchContainer = $(divString).addClass("available-couch")
 			var $preFold = $(divString).addClass("pre-fold").append($("<h3></h3>").text(userArray[i].name+"("+userArray[i].city+")"))
 			var $postFold = $(divString).addClass("post-fold").append($("<p></p>").html(userArray[i].description));
-			$couchContainer.append(preFold).append(postFold)
+			$couchContainer.append($preFold).append($postFold)
+			$("#available-couches").append($couchContainer)
 		}
 	}
 }
 
 function rePopulateConcertList(concertArray){
+	$("#sugested > ul").empty();
 	for(var i = 0, l = concertArray.length; i<l; i++){
 		if(concertArray[i].getBaseClass() == Concert){
 			var liString = "<li></li>";
-			var ContertListContainer = $(liString)
-			var title = $("<h3></h3>").text(concertArray[i].name)
-			var info = $("<ul></ul>").append($("<li></li>").text(concertArray[i].venue)).append($("<li></li>").text(concertArray[i].city))
+			var $concertListContainer = $(liString);
+			$concertListContainer.append($("<h3></h3>").text(concertArray[i].name))
+			for(var ii = 0, ll = concertArray[i].artists.length; ii<ll; ii++){
+				$concertListContainer.append($("<a></a>").text(concertArray[i].artists[ii].name).attr({title:this.name,href:"#"}))
+				
+			}
 			
+			$concertListContainer.append($("<ul></ul>").append($("<li></li>").text(concertArray[i].venue)).append($("<li></li>").text(concertArray[i].city)));
+			
+			$("#sugested > ul").append($concertListContainer);
 		}
 	}
 }
+$(document).ready(function(){
+	$("#sugested > ul > li").hover(function(){
+		_top = 10+ $(this).offset().top - $("#sugested").offset().top
+		console.log(_top);
+		$("#available-couches .arrow").css("margin-top" , _top);
+		$("#available-couches").css("min-height" , _top+120);
+	})
+	$(".available-couch").live("click",function(){
+		$(this).find(".post-fold").toggle("fast");
+	})
+	
+	_user = new User();
+	_user.name = "Peter Griffin";
+	_user.city = "Quahog";
+	_user.description = "description";
+	rePopulateHostList([_user]);
+});
 /**
  * <b>Concert</b>
  * Dec 1, 2012 Robin
@@ -64,7 +81,7 @@ function rePopulateConcertList(concertArray){
  * @returns
  */
 
-function Concert(name, artists, venue, artists) {
+function Concert() {
 
 	// *********************************************************************** 
 	// CONSTRUCTOR METHOD WHICH EXECUTTES ITSELF ON CREATION OF THE CLASS
