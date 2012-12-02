@@ -6,21 +6,19 @@ spotifyuser.spotifyprofileid = null;
 spotifyuser.toplist = null;
 var artists,
 	similar,
-	events,
+	events = [],
+	timer,
 	lastFMLoader = new LastFMLoader()
 lastFMLoader.getUserTopArtists("RobinNieuwboer", returnedTopArtists, 200)
 
 Usergrid.ApiClient.init('lode', 'sandbox');
 var hosts = new Usergrid.Collection('csmembers');
-console.log(hosts);
-
 hosts.setQueryParams({"filter":"location='Amsterdam'"});
 hosts.get(function(){
 	while(hosts.hasNextEntity()) {
 		var host = hosts.getNextEntity();
 	}
 });
-
 rePopulateHostList(hosts._data);
 
 function init() {
@@ -58,11 +56,12 @@ function returnedSimilarArtists(data){
 	//lastFMLoader.getArtistEvents(artists[4]["name"], returnedArtistEvents, 10);
 }
 function returnedArtistEvents(data){
-	events.push(LastFMParser.parseArtistEvents(data));
+	events = events.concat(LastFMParser.parseArtistEvents(data));
+	clearTimeout(timer);
+	timer = setTimeout(rePopulateConcertList,40,[events]);
 }
 $("#sugested > ul > li").hover(function(){
 	_top = 10+ $(this).offset().top - $("#sugested").offset().top
-	console.log(_top);
 	$("#available-couches .arrow").css("margin-top" , _top);
 	$("#available-couches").css("min-height" , _top+120);
 })
@@ -83,6 +82,7 @@ function rePopulateHostList(userArray){
 }
 
 function rePopulateConcertList(concertArray){
+	concertArray = concertArray[0];
 	$("#sugested > ul").empty();
 	for(var i = 0, l = concertArray.length; i<l; i++){
 		if(concertArray[i].getBaseClass() == Concert){
@@ -101,21 +101,14 @@ function rePopulateConcertList(concertArray){
 	}
 }
 $(document).ready(function(){
-	$("#sugested > ul > li").hover(function(){
+	$("#sugested > ul > li").live("hover",function(){
 		_top = 10+ $(this).offset().top - $("#sugested").offset().top
-		console.log(_top);
-		$("#available-couches .arrow").css("margin-top" , _top);
-		$("#available-couches").css("min-height" , _top+120);
+		$("#available-couches").css("margin-top" , _top);
 	})
 	$(".available-couch").live("click",function(){
 		$(this).find(".post-fold").toggle("fast");
 	})
 	
-	_user = new User();
-	_user.name = "Peter Griffin";
-	_user.city = "Quahog";
-	_user.description = "description";
-	rePopulateHostList([_user]);
 });
 /**
  * <b>Concert</b>
@@ -639,7 +632,6 @@ LastFMParser.parseArtistEvents = function(_jsonString) {
 			newConcert.venue = concertsJson[i]["venue"]["name"];
 			newConcert.city = concertsJson[i]["venue"]["location"]["city"];
 			newConcert.latLong = new LatLong(concertsJson[i]["venue"]["location"]["geo:point"]["geo:lat"], concertsJson[i]["venue"]["location"]["geo:point"]["geo:long"]);
-			console.log(concertsJson[i]["artists"]["artist"].length);
 			for(var ii = 0, ll = concertsJson[i]["artists"]["artist"].length; ii<ll; ii++){
 				var newArtist = new Artist()
 				newArtist.name = concertsJson[i]["artists"]["artist"][ii];
