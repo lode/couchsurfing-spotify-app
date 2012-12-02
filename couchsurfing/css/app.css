@@ -1,6 +1,6 @@
 body {
 	background-color: #373737;
-	color: #999;
+	color: #CCC;
 }
 p {
 	text-align: left;
@@ -59,4 +59,16 @@ h1 {
 #hosts img {
 	width: 60px;
 	height: 60px;
+}
+
+.home_button{
+    padding:5px;
+    background:#08C;
+}
+
+#cs-auth-container{
+    text-align: center;
+    width:500px;
+    margin-left:auto;
+    margin-right:auto;
 }

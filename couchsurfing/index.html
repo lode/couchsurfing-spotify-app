@@ -10,22 +10,32 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-<div class="container-narrow">
-
-<h1 id="header">Concert Sleep-Over</h1>
-
-<div class="row">
-    <div class="span8">
-        <h2>Couchsurfing authentication!</h2>
+<div class="two-col">
+<div class="home_button">
+    <a class="home btn" href="#">overview</a>
+</div>
+    <div class="span12 pagination-centered">
+        <h2>Concert Sleep-Over</h2>
+        
+        <i class="icon-white icon-arrow-down"></i>
+        <h4>Connect to CouchSurfing</h4>
         <form id="cs-authentication" action="#authenticate-couchsurfing" class="form-horizontal">
-            <input type="text" class="span4" name="profile_url" placeholder="Your couchsurfing direct profile url?">
-            <input type="submit" class="btn span2" value="search">
+            <input type="text" class="span6" name="profile_url" placeholder="Your couchsurfing direct profile url">
+            <input type="submit" class="btn span2" value="Sign In with CouchSurfing">
         </form>
         <p class="auth-error"></p>
+        
+        <i class="icon-white icon-arrow-down"></i>
+        <h4>Find new concerts</h4>
+        <img class="img-rounded" style="display: inline-block; margin-bottom: 1em;" src="img/concert.jpg">
+        <br>
+        
+        <i class="icon-white icon-arrow-down"></i>
+        <h4>Find a host to sleep <s>with</s> at</h4>
+        
+        <i class="icon-white icon-arrow-down"></i>
+        <h4>have fun at the concert together</h4>
     </div>
-    
-    <p><a href="overview.html">developers: join us to the overview</a></p>
-</div>
 
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -34,6 +44,9 @@
 <script src="js/spotify-user.js"></script>
 <script src="js/usergrid.appSDK.js" type="text/javascript"></script>
 <script type="text/javascript">
+$('.home').on('click', function(){
+    window.location.href = 'overview.html';
+});
 $('#cs-authentication').submit(function(e) {
     
     e.preventDefault();
@@ -85,6 +98,7 @@ $('#cs-authentication').submit(function(e) {
                     topartist.set("spotifyprofileid",spotifyprofileid);
                     topartist.set("csprofileid",csprofileid);
                     topartist.set("artist",spotifyuser.topartists[i]);
+                    topartist.set("name",spotifyprofileid+spotifyuser.topartists[i]);
                     topartist.save();
                     
                     console.log(spotifyuser.topartists[i]);

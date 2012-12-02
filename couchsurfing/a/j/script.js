@@ -13,7 +13,7 @@ lastFMLoader.getUserTopArtists("RobinNieuwboer", returnedTopArtists, 200)
 
 Usergrid.ApiClient.init('lode', 'sandbox');
 var hosts = new Usergrid.Collection('csmembers');
-hosts.setQueryParams({"filter":"location='Amsterdam'"});
+hosts.setQueryParams({"ql":"city='Amsterdam' and availability='Yes' or availability='Maybe'"});
 hosts.get(function(){
 	while(hosts.hasNextEntity()) {
 		var host = hosts.getNextEntity();
@@ -68,23 +68,28 @@ function returnedArtistEvents(data){
 	clearTimeout(timer);
 	timer = setTimeout(rePopulateConcertList,40,[events]);
 }
-$("#sugested > ul > li").hover(function(){
+$("#sugested > ul > li").live('mouseenter', function(){
 	_top = 10+ $(this).offset().top - $("#sugested").offset().top
-	$("#available-couches .arrow").css("margin-top" , _top);
+	$("#available-couches .arrow").css("top" , _top);
 	$("#available-couches").css("min-height" , _top+120);
-})
-$(".available-couch").live('click', function(){
-	$(this).find(".post-fold").toggle("fast");
+	rePopulateHostList();
 })
 
+
+
 function rePopulateHostList(userArray){
+	$('#available-couches').html('');
+	
 	hosts.get(function(){
 		while (hosts.hasNextEntity()) {
 			var host = hosts.getNextEntity();
-			
-			var $couchTpl = $('#tpl-host').html();
-			var $couch = $.mustache($couchTpl, host._data);
-			$('#available-couches').append($couch);
+			console.log(host.get('member_name'));
+			var random = Math.floor(Math.random() * 4)+0;
+			if (random < 1) {
+				var $couchTpl = $('#tpl-host').html();
+				var $couch = $.mustache($couchTpl, host._data);
+				$('#available-couches').append($couch);
+			}
 		}
 	});
 }
@@ -113,10 +118,6 @@ $(document).ready(function(){
 		_top = 10+ $(this).offset().top - $("#sugested").offset().top
 		$("#available-couches").css("margin-top" , _top);
 	})
-	$(".available-couch").live("click",function(){
-		$(this).find(".post-fold").toggle("fast");
-	})
-	
 });
 /**
  * <b>Concert</b>
