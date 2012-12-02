@@ -60,20 +60,28 @@ function returnedArtistEvents(data){
 	clearTimeout(timer);
 	timer = setTimeout(rePopulateConcertList,40,[events]);
 }
-$("#sugested > ul > li").hover(function(){
+$("#sugested > ul > li").live('hover', function(){
 	_top = 10+ $(this).offset().top - $("#sugested").offset().top
 	$("#available-couches .arrow").css("top" , _top);
 	$("#available-couches").css("min-height" , _top+120);
+	rePopulateHostList();
 })
 
+
+
 function rePopulateHostList(userArray){
+	$('#available-couches').html('');
+	
 	hosts.get(function(){
 		while (hosts.hasNextEntity()) {
 			var host = hosts.getNextEntity();
-			
-			var $couchTpl = $('#tpl-host').html();
-			var $couch = $.mustache($couchTpl, host._data);
-			$('#available-couches').append($couch);
+			console.log(host.get('member_name'));
+			var random = Math.floor(Math.random() * 4)+0;
+			if (random < 1) {
+				var $couchTpl = $('#tpl-host').html();
+				var $couch = $.mustache($couchTpl, host._data);
+				$('#available-couches').append($couch);
+			}
 		}
 	});
 }
