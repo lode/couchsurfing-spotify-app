@@ -13,7 +13,7 @@ lastFMLoader.getUserTopArtists("RobinNieuwboer", returnedTopArtists, 200)
 
 Usergrid.ApiClient.init('lode', 'sandbox');
 var hosts = new Usergrid.Collection('csmembers');
-hosts.setQueryParams({"filter":"location='Amsterdam'"});
+hosts.setQueryParams({"ql":"city='Amsterdam' and availability='Yes' or availability='Maybe'"});
 hosts.get(function(){
 	while(hosts.hasNextEntity()) {
 		var host = hosts.getNextEntity();
