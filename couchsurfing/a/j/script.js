@@ -4,6 +4,9 @@ var artists,
 	lastFMLoader = new LastFMLoader()
 lastFMLoader.getUserTopArtists("RobinNieuwboer", returnedTopArtists, 200)
 
+//CouchSurfingLoader = new CouchSurfingLoader();
+//CouchSurfingLoader.getHostProfiles("Amsterdam", rePopulateHostList, 200);
+
 function returnedTopArtists(data){
 	artists = LastFMParser.parseTopArtists(data);
 
@@ -584,5 +587,85 @@ LastFMParser.parseArtistEvents = function(_jsonString) {
 	}
 	return concerts;
 }
+
+
+
+/**
+ * <b>CouchSurfingLoadeer</b>
+ * Dec 1, 2012 Lode
+ * 
+ * handles hosts from couchsurfing and adds them to concerts
+ * @author Lode
+ * 
+ * @returns
+ */
+
+function CouchSurfingLoader() {
+
+	// *********************************************************************** 
+	// CONSTRUCTOR METHOD WHICH EXECUTTES ITSELF ON CREATION OF THE CLASS
+	// *********************************************************************** 
+	(function() {
+
+	})();
+
+	// ***********************************************************************
+	// PRIVATE VARIABLES  
+	// ONLY PRIVELEGED METHODS MAY VIEW/EDIT/INVOKE 
+	// *********************************************************************** 
+
+	
+	// *********************************************************************** 
+	// PRIVATE METHODS 
+	// ONLY PRIVELEGED METHODS MAY VIEW/EDIT/INVOKE 
+	// *********************************************************************** 
+	
+
+	// *********************************************************************** 
+	// PRIVILEGED METHODS 
+	// MAY BE INVOKED PUBLICLY AND MAY ACCESS PRIVATE ITEMS 
+	// MAY NOT BE CHANGED; MAY BE REPLACED WITH PUBLIC FLAVORS 
+	// ************************************************************************ 
+	this.getBaseClass = function() {
+		return className;
+	};
+	
+	this.getHostProfiles = function(_location, handler, _length){
+		if (_location == undefined) {
+			_location = 'Amsterdam';
+		}
+		
+		Usergrid.ApiClient.init('lode', 'sandbox');
+		var hosts = new Usergrid.Collection('csmembers');
+		
+		hosts.setQueryParams({"filter":"location='" + _location + "'"});
+		hosts.get(function(){
+			while(hosts.hasNextEntity()) {
+				var host = hosts.getNextEntity();
+			}
+		});
+		
+		//console.log(hosts);
+	};
+
+	// ************************************************************************ 
+	// PUBLIC PROPERTIES -- ANYONE MAY READ/WRITE 
+	// ************************************************************************ 
+	
+};
+
+// ************************************************************************ 
+// PUBLIC METHODS -- ANYONE MAY READ/WRITE Classname.prototype.method
+// ************************************************************************ 
+
+
+// ************************************************************************ 
+// PROTOTYOPE PROERTIES -- ANYONE MAY READ/WRITE (but may be overridden) 
+// ************************************************************************ 
+
+
+// ************************************************************************ 
+// STATIC PROPERTIES -- ANYONE MAY READ/WRITE 
+// ************************************************************************ 
 
 
