@@ -31,6 +31,19 @@ function rePopulateHostList(userArray){
 	for(var i = 0, l = userArray.length; i<l; i++){
 		if(userArray[i].getBaseClass() == User){
 			var divString = "<div></div>";
+			var $couchContainer = $(divString).addClass("available-couch")
+			var $preFold = $(divString).addClass("pre-fold").append($("<h3></h3>").text(userArray[i].name+"("+userArray[i].city+")"))
+			var $postFold = $(divString).addClass("post-fold").append($("<p></p>").html(userArray[i].description));
+			$couchContainer.append(preFold).append(postFold)
+			
+		}
+	}
+}
+
+function rePopulateConcertList(concertArray){
+	for(var i = 0, l = userArray.length; i<l; i++){
+		if(userArray[i].getBaseClass() == User){
+			var divString = "<div></div>";
 			var couchContainer = $(divString).addClass("available-couch")
 			var preFold = $(divString).addClass("pre-fold").append($("<h3></h3>").text(userArray[i].name+"("+userArray[i].city+")"))
 			var postFold = $(divString).addClass("post-fold").append($("<p></p>").html(userArray[i].description))
