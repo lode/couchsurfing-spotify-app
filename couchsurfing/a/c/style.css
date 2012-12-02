@@ -137,7 +137,6 @@ h2{
 #available-couches .available-couch{
 	padding:.5em;
 }
-<<<<<<< HEAD
 #available-couches .available-couch .pre-fold{
 	border:1px solid #313131;
 	padding:.5em;
@@ -146,8 +145,6 @@ h2{
 #available-couches .available-couch .pre-fold:hover{
 	border:1px solid #7CB5EE;
 }
-=======
->>>>>>> origin/master
 #available-couches .available-couch h3{
 	margin: 0;
 	padding: 0;
