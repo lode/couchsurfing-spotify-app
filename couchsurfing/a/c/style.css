@@ -6,6 +6,9 @@
 a {
   color: #7cb5ee;
 }
+body {
+  overflow: auto;
+}
 html, body{
 	width:100%;
 	height:100%;
@@ -14,7 +17,9 @@ html, body{
 	padding:0;
 	color:#FFF;
 }
-
+.two-col {
+  overflow: hidden;
+}
 .full-width{
 	width:100%;
 }
@@ -138,13 +143,13 @@ h2{
 	border-radius:2px;
 }
 #available-couches .available-couch .pre-fold:hover{
-	border:1px solid #0BF;
+	border:1px solid ##7CB5EE;
 }
 #available-couches .available-couch h3{
 	margin:0 0 .3em 0;
 	padding:0;
 	text-shadow:0 1px 0 #000;
-	color:#0BF;
+	color:#7CB5EE;
 }
 #available-couches .available-couch .post-fold{
 	border:solid #313131;

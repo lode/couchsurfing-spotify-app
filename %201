@@ -1,0 +1,1 @@
+{"error":"query_parse","timestamp":1354452395989,"duration":0,"exception":"org.usergrid.persistence.exceptions.QueryParseException","error_description":"The query cannot be parsed.  The token 'created' at column 6 on line 1 cannot be parsed"}
