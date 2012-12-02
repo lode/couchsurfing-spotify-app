@@ -1,7 +1,8 @@
 var artists,
 	similar,
 	events,
-	lastFMLoader = new LastFMLoader()
+	lastFMLoader = new LastFMLoader();
+
 lastFMLoader.getUserTopArtists("RobinNieuwboer", returnedTopArtists, 200)
 
 //CouchSurfingLoader = new CouchSurfingLoader();
@@ -97,9 +98,9 @@ function Concert(name, artists, venue, artists) {
 	
 	this.getGenres = function(){
 		artists = self.artists;
-		genres = [];
+		var genres = [];
 		for(var i =0, l = artists.length; i<l; i++){
-			artistGenres = artist[i]["genres"];
+			var artistGenres = artist[i]["genres"];
 			for(var i=0, l = artisGenres.length; i<l; i++){
 				if(genres.indexOf(artistGenres[i]) > -1){
 					genres.push(artistGenres[i]);
@@ -325,7 +326,7 @@ function User() {
 		var artists = self.artists,
 			genres = [];
 		for(var i =0, l = artists.length; i<l; i++){
-			artistGenres = artist[i]["genres"];
+			var artistGenres = artist[i]["genres"];
 			for(var i=0, l = artisGenres.length; i<l; i++){
 				if(genres.indexOf(artistGenres[i]) > -1){
 					genres.push(artistGenres[i]);
