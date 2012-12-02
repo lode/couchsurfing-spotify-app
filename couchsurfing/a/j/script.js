@@ -65,9 +65,6 @@ $("#sugested > ul > li").hover(function(){
 	$("#available-couches .arrow").css("top" , _top);
 	$("#available-couches").css("min-height" , _top+120);
 })
-$(".available-couch").live('click', function(){
-	$(this).find(".post-fold").toggle("fast");
-})
 
 function rePopulateHostList(userArray){
 	hosts.get(function(){
