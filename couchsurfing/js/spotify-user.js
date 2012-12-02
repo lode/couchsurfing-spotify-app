@@ -3,7 +3,7 @@ var models = sp.require('sp://import/scripts/api/models');
 var player = models.player;
 var spotifyuser = {};
 spotifyuser.spotifyprofileid = null;
-spotifyuser.toplist = null;
+spotifyuser.topartists = [];
 
 function init() {
 
@@ -11,24 +11,18 @@ function init() {
     var models = sp.require('sp://import/scripts/api/models');
     
     var toplist = new models.Toplist();
-    spotifyuser.toplist = toplist;
     
     toplist.toplistType = models.TOPLISTTYPE.USER;
     toplist.matchType = models.TOPLISTMATCHES.ARTISTS;
-    var user = models.USER;
-    
-    spotifyuser.spotifyprofileid = models.session.anonymousUserID;
     
     toplist.observe(models.EVENT.CHANGE, function() {
         toplist.results.forEach(function(artist) {
-           // console.log(artist.name);
+            spotifyuser.topartists.push(artist.name);
         });
     });
 
-    var a = models.Artist.fromURI('spotify:artist:5EEw5ABtKN2jJWKvoe7NYU', function(artist) {
-    	  console.log(artist);
-    	});
-    
     toplist.run();
+    
+    spotifyuser.spotifyprofileid = models.session.anonymousUserID;
 }
 init();
