@@ -137,28 +137,16 @@ h2{
 #available-couches .available-couch{
 	padding:.5em;
 }
-#available-couches .available-couch .pre-fold{
-	border:1px solid #313131;
-	padding:.5em;
-	border-radius:2px;
-}
-#available-couches .available-couch .pre-fold:hover{
-	border:1px solid ##7CB5EE;
-}
 #available-couches .available-couch h3{
-	margin:0 0 .3em 0;
-	padding:0;
+	margin: 0;
+	padding: 0;
 	text-shadow:0 1px 0 #000;
 	color:#7CB5EE;
 }
 #available-couches .available-couch .post-fold{
-	border:solid #313131;
 	padding:.5em;
 	border-width:0 1px 1px 1px;
   overflow: hidden;
-}
-#available-couches .available-couch .post-fold *{
-	text-shadow:0 1px 0 #000;
 }
 #available-couches .arrow{
 	position:absolute;
