@@ -29,18 +29,18 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/jquery-1.8.3.min.js"><\/script>')</script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/example.js"></script>
+<script src="js/spotify-user.js"></script>
 <script src="js/usergrid.appSDK.js" type="text/javascript"></script>
 <script type="text/javascript">
 $('#cs-authentication').submit(function(e) {
     
     e.preventDefault();
     
-    console.log($('input[name=profile_url]').val());
+    //console.log($('input[name=profile_url]').val());
     var profile_url = $('input[name=profile_url]').val();
     var profile_parts = profile_url.split('/');
     
-    console.log(profile_parts);
+    //console.log(profile_parts);
     
     if(profile_parts[4] != null){
         
@@ -55,8 +55,41 @@ $('#cs-authentication').submit(function(e) {
             var entity = csmembers.getNextEntity();
             
             if(entity){
+                
                 var csprofileid = entity._data.id;
                 $('.auth-error').html('');
+                
+                var spotifyprofileid = spotifyuser.spotifyprofileid;
+                
+                var users = new Usergrid.Collection('appusers');
+                
+                var user = new Usergrid.Entity("appusers");
+                user.set("csid",csprofileid);
+                user.set("name",csprofileid);
+                user.set("spotifyid",spotifyprofileid);
+                user.save();
+
+                console.log(user);
+
+                users.addNewEntity(user);
+               
+                //var appuserid = user._uuid;
+               
+                
+                
+                var topartists = new Usergrid.Collection('topartists');
+                
+                for (var i = 0; i < spotifyuser.topartists.length; i++) {
+                    
+                    var topartist = new Usergrid.Entity("topartists");
+                    topartist.set("appuserid",appuserid);
+                    topartist.set("artist",topartists[i]);
+                    
+                    //console.log(spotifyuser.topartists[i]);
+                    //Do something
+                
+                }
+                
             } else {
                 $('.auth-error').html('profile id unknown');
             }
