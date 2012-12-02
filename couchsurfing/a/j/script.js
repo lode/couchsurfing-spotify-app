@@ -45,6 +45,14 @@ function init() {
 }
 init();
 
+$("#custom-search form").live("submit",function(e){
+	e.preventDefault();
+	events = [];
+	$("#sugested > ul").empty();
+	//console.log($(".npt").attr("value"));
+	lastFMLoader.getArtistEvents($(".npt").attr("value"), returnedArtistEvents, 99);
+})
+
 function returnedTopArtists(data){
 	//artists = LastFMParser.parseTopArtists(data);
 
