@@ -1,8 +1,13 @@
+var sp = getSpotifyApi(1);
+var models = sp.require('sp://import/scripts/api/models');
+var player = models.player;
+var spotifyuser = {};
+spotifyuser.spotifyprofileid = null;
+spotifyuser.toplist = null;
 var artists,
 	similar,
 	events,
-	lastFMLoader = new LastFMLoader();
-
+	lastFMLoader = new LastFMLoader()
 lastFMLoader.getUserTopArtists("RobinNieuwboer", returnedTopArtists, 200)
 
 Usergrid.ApiClient.init('lode', 'sandbox');
@@ -18,18 +23,42 @@ hosts.get(function(){
 
 rePopulateHostList(hosts._data);
 
-function returnedTopArtists(data){
-	artists = LastFMParser.parseTopArtists(data);
+function init() {
 
-	lastFMLoader.getArtistsSimilar(artists[0]["name"], returnedSimilarArtists, 10);
+    var sp = getSpotifyApi();
+    var models = sp.require('sp://import/scripts/api/models');
+    
+    var toplist = new models.Toplist();
+    spotifyuser.toplist = toplist;
+    
+    toplist.toplistType = models.TOPLISTTYPE.USER;
+    toplist.matchType = models.TOPLISTMATCHES.ARTISTS;
+    var user = models.USER;
+    
+    spotifyuser.spotifyprofileid = models.session.anonymousUserID;
+    
+    toplist.observe(models.EVENT.CHANGE, function() {
+        toplist.results.forEach(function(artist) {
+        	lastFMLoader.getArtistEvents(artist.name, returnedArtistEvents, 99);
+        });
+    });
+
+    toplist.run();
+}
+init();
+
+function returnedTopArtists(data){
+	//artists = LastFMParser.parseTopArtists(data);
+
+	//lastFMLoader.getArtistsSimilar(artists[0]["name"], returnedSimilarArtists, 10);
 }
 function returnedSimilarArtists(data){
-	similar = LastFMParser.parseSimilarArtists(data);
+	//similar = LastFMParser.parseSimilarArtists(data);
 
-	lastFMLoader.getArtistEvents(artists[4]["name"], returnedArtistEvents, 10);
+	//lastFMLoader.getArtistEvents(artists[4]["name"], returnedArtistEvents, 10);
 }
 function returnedArtistEvents(data){
-	events = LastFMParser.parseArtistEvents(data);
+	events.push(LastFMParser.parseArtistEvents(data));
 }
 $("#sugested > ul > li").hover(function(){
 	_top = 10+ $(this).offset().top - $("#sugested").offset().top
@@ -132,9 +161,9 @@ function Concert() {
 	
 	this.getGenres = function(){
 		artists = self.artists;
-		var genres = [];
+		genres = [];
 		for(var i =0, l = artists.length; i<l; i++){
-			var artistGenres = artist[i]["genres"];
+			artistGenres = artist[i]["genres"];
 			for(var i=0, l = artisGenres.length; i<l; i++){
 				if(genres.indexOf(artistGenres[i]) > -1){
 					genres.push(artistGenres[i]);
@@ -360,7 +389,7 @@ function User() {
 		var artists = self.artists,
 			genres = [];
 		for(var i =0, l = artists.length; i<l; i++){
-			var artistGenres = artist[i]["genres"];
+			artistGenres = artist[i]["genres"];
 			for(var i=0, l = artisGenres.length; i<l; i++){
 				if(genres.indexOf(artistGenres[i]) > -1){
 					genres.push(artistGenres[i]);
@@ -604,7 +633,6 @@ LastFMParser.parseArtistEvents = function(_jsonString) {
 	var concerts = [];
 	var concertsJson = _jsonString["events"]["event"];
 	if(concertsJson.length > 0){
-		console.log(concertsJson.length);
 		for(var i = 0, l = concertsJson.length; i<l; i++){
 			var newConcert = new Concert()
 			newConcert.name = concertsJson[i]["title"];
@@ -622,3 +650,8 @@ LastFMParser.parseArtistEvents = function(_jsonString) {
 	}
 	return concerts;
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/master

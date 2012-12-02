@@ -25,10 +25,6 @@ function init() {
         });
     });
 
-    var a = models.Artist.fromURI('spotify:artist:5EEw5ABtKN2jJWKvoe7NYU', function(artist) {
-    	  console.log(artist);
-    	});
-    
     toplist.run();
 }
 init();
