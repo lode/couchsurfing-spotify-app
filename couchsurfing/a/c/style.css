@@ -92,7 +92,7 @@ h2{
 
 }
 #sugested li a:after{
-	content:' ';
+	content:'';
 }
 #sugested li h3{
 	font-size:1.2em;
