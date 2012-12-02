@@ -60,7 +60,7 @@ function returnedArtistEvents(data){
 	clearTimeout(timer);
 	timer = setTimeout(rePopulateConcertList,40,[events]);
 }
-$("#sugested > ul > li").live('hover', function(){
+$("#sugested > ul > li").live('mouseenter', function(){
 	_top = 10+ $(this).offset().top - $("#sugested").offset().top
 	$("#available-couches .arrow").css("top" , _top);
 	$("#available-couches").css("min-height" , _top+120);
