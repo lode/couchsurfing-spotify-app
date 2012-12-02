@@ -1,8 +1,10 @@
 @CHARSET "UTF-8";
 *{
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	color:EEE;
 	font-size:14px;
+}
+a {
+  color: #7cb5ee;
 }
 html, body{
 	width:100%;
@@ -33,10 +35,6 @@ html, body{
 	background: linear-gradient(to bottom, #b2b2b2 1%,#777777 96%,#161616 96%,#313131 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2b2b2', endColorstr='#313131',GradientType=0 );
 	padding:.2em;
-}
-.col-header.right{
-	text-align:right;
-	color:red;
 }
 h2{
 	font-size:1.6em;
@@ -101,7 +99,6 @@ h2{
 	text-shadow:0 1px 0 #000;
 	margin:0 0 .2em;
 	padding:0;
-	color:#F00;
 }
 #sugested > ul > li a{
 	font-size:1em;
@@ -112,7 +109,7 @@ h2{
 #sugested > ul > li a.high-light{
 	font-size:1.4em;
 	font-weight:800;
-	text-shadow:0 0 3px #F00;
+	/*text-shadow:0 0 3px #F00;*/
 }
 #sugested > ul > li > ul > li{
 	display:inline-block;
@@ -130,6 +127,7 @@ h2{
 	-webkit-transition: all .2s ease-in-out;
 	-o-transition: all .2s ease-in-out;
 	transition: all .2s ease-in-out;
+	min-height:8em;
 }
 #available-couches .available-couch{
 	padding:.5em;

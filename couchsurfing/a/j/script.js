@@ -1,8 +1,12 @@
 var artists,
 	similar,
 	events,
-	lastFMLoader = new LastFMLoader()
+	lastFMLoader = new LastFMLoader();
+
 lastFMLoader.getUserTopArtists("RobinNieuwboer", returnedTopArtists, 200)
+
+//CouchSurfingLoader = new CouchSurfingLoader();
+//CouchSurfingLoader.getHostProfiles("Amsterdam", rePopulateHostList, 200);
 
 function returnedTopArtists(data){
 	artists = LastFMParser.parseTopArtists(data);
@@ -17,39 +21,56 @@ function returnedSimilarArtists(data){
 function returnedArtistEvents(data){
 	events = LastFMParser.parseArtistEvents(data);
 }
-$("#sugested > ul > li").hover(function(){
-	_top = 10+ $(this).offset().top - $("#sugested").offset().top
-	console.log(_top);
-	$("#available-couches .arrow").css("margin-top" , _top);
-	$("#available-couches").css("min-height" , _top+120);
-})
-$(".available-couch").click(function(){
-	$(this).find(".post-fold").toggle("fast");
-})
 
 function rePopulateHostList(userArray){
+	$("#available-couches .available-couch").remove();
 	for(var i = 0, l = userArray.length; i<l; i++){
 		if(userArray[i].getBaseClass() == User){
 			var divString = "<div></div>";
 			var $couchContainer = $(divString).addClass("available-couch")
 			var $preFold = $(divString).addClass("pre-fold").append($("<h3></h3>").text(userArray[i].name+"("+userArray[i].city+")"))
 			var $postFold = $(divString).addClass("post-fold").append($("<p></p>").html(userArray[i].description));
-			$couchContainer.append(preFold).append(postFold)
+			$couchContainer.append($preFold).append($postFold)
+			$("#available-couches").append($couchContainer)
 		}
 	}
 }
 
 function rePopulateConcertList(concertArray){
+	$("#sugested > ul").empty();
 	for(var i = 0, l = concertArray.length; i<l; i++){
 		if(concertArray[i].getBaseClass() == Concert){
 			var liString = "<li></li>";
-			var ContertListContainer = $(liString)
-			var title = $("<h3></h3>").text(concertArray[i].name)
-			var info = $("<ul></ul>").append($("<li></li>").text(concertArray[i].venue)).append($("<li></li>").text(concertArray[i].city))
+			var $concertListContainer = $(liString);
+			$concertListContainer.append($("<h3></h3>").text(concertArray[i].name))
+			for(var ii = 0, ll = concertArray[i].artists.length; ii<ll; ii++){
+				$concertListContainer.append($("<a></a>").text(concertArray[i].artists[ii].name).attr({title:this.name,href:"#"}))
+				
+			}
 			
+			$concertListContainer.append($("<ul></ul>").append($("<li></li>").text(concertArray[i].venue)).append($("<li></li>").text(concertArray[i].city)));
+			
+			$("#sugested > ul").append($concertListContainer);
 		}
 	}
 }
+$(document).ready(function(){
+	$("#sugested > ul > li").hover(function(){
+		_top = 10+ $(this).offset().top - $("#sugested").offset().top
+		console.log(_top);
+		$("#available-couches .arrow").css("margin-top" , _top);
+		$("#available-couches").css("min-height" , _top+120);
+	})
+	$(".available-couch").live("click",function(){
+		$(this).find(".post-fold").toggle("fast");
+	})
+	
+	_user = new User();
+	_user.name = "Peter Griffin";
+	_user.city = "Quahog";
+	_user.description = "description";
+	rePopulateHostList([_user]);
+});
 /**
  * <b>Concert</b>
  * Dec 1, 2012 Robin
@@ -60,7 +81,7 @@ function rePopulateConcertList(concertArray){
  * @returns
  */
 
-function Concert(name, artists, venue, artists) {
+function Concert() {
 
 	// *********************************************************************** 
 	// CONSTRUCTOR METHOD WHICH EXECUTTES ITSELF ON CREATION OF THE CLASS
@@ -94,9 +115,9 @@ function Concert(name, artists, venue, artists) {
 	
 	this.getGenres = function(){
 		artists = self.artists;
-		genres = [];
+		var genres = [];
 		for(var i =0, l = artists.length; i<l; i++){
-			artistGenres = artist[i]["genres"];
+			var artistGenres = artist[i]["genres"];
 			for(var i=0, l = artisGenres.length; i<l; i++){
 				if(genres.indexOf(artistGenres[i]) > -1){
 					genres.push(artistGenres[i]);
@@ -322,7 +343,7 @@ function User() {
 		var artists = self.artists,
 			genres = [];
 		for(var i =0, l = artists.length; i<l; i++){
-			artistGenres = artist[i]["genres"];
+			var artistGenres = artist[i]["genres"];
 			for(var i=0, l = artisGenres.length; i<l; i++){
 				if(genres.indexOf(artistGenres[i]) > -1){
 					genres.push(artistGenres[i]);
@@ -584,5 +605,85 @@ LastFMParser.parseArtistEvents = function(_jsonString) {
 	}
 	return concerts;
 }
+
+
+
+/**
+ * <b>CouchSurfingLoadeer</b>
+ * Dec 1, 2012 Lode
+ * 
+ * handles hosts from couchsurfing and adds them to concerts
+ * @author Lode
+ * 
+ * @returns
+ */
+
+function CouchSurfingLoader() {
+
+	// *********************************************************************** 
+	// CONSTRUCTOR METHOD WHICH EXECUTTES ITSELF ON CREATION OF THE CLASS
+	// *********************************************************************** 
+	(function() {
+
+	})();
+
+	// ***********************************************************************
+	// PRIVATE VARIABLES  
+	// ONLY PRIVELEGED METHODS MAY VIEW/EDIT/INVOKE 
+	// *********************************************************************** 
+
+	
+	// *********************************************************************** 
+	// PRIVATE METHODS 
+	// ONLY PRIVELEGED METHODS MAY VIEW/EDIT/INVOKE 
+	// *********************************************************************** 
+	
+
+	// *********************************************************************** 
+	// PRIVILEGED METHODS 
+	// MAY BE INVOKED PUBLICLY AND MAY ACCESS PRIVATE ITEMS 
+	// MAY NOT BE CHANGED; MAY BE REPLACED WITH PUBLIC FLAVORS 
+	// ************************************************************************ 
+	this.getBaseClass = function() {
+		return className;
+	};
+	
+	this.getHostProfiles = function(_location, handler, _length){
+		if (_location == undefined) {
+			_location = 'Amsterdam';
+		}
+		
+		Usergrid.ApiClient.init('lode', 'sandbox');
+		var hosts = new Usergrid.Collection('csmembers');
+		
+		hosts.setQueryParams({"filter":"location='" + _location + "'"});
+		hosts.get(function(){
+			while(hosts.hasNextEntity()) {
+				var host = hosts.getNextEntity();
+			}
+		});
+		
+		//console.log(hosts);
+	};
+
+	// ************************************************************************ 
+	// PUBLIC PROPERTIES -- ANYONE MAY READ/WRITE 
+	// ************************************************************************ 
+	
+};
+
+// ************************************************************************ 
+// PUBLIC METHODS -- ANYONE MAY READ/WRITE Classname.prototype.method
+// ************************************************************************ 
+
+
+// ************************************************************************ 
+// PROTOTYOPE PROERTIES -- ANYONE MAY READ/WRITE (but may be overridden) 
+// ************************************************************************ 
+
+
+// ************************************************************************ 
+// STATIC PROPERTIES -- ANYONE MAY READ/WRITE 
+// ************************************************************************ 
 
 
